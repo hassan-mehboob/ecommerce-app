@@ -6,15 +6,16 @@ import {
   deleteProduct,
   getProductDetails,
 } from "../controllers/productController.js"
+import { isAuthenticatedUser } from "../middleware/auth.js"
 const router = express.Router()
 
 router.route("/products").get(getAllProducts)
-router.route("/product/new").post(createProduct)
+router.route("/product/new").post(isAuthenticatedUser, createProduct)
 
 router
   .route("/product/:id")
-  .put(updateProduct)
-  .delete(deleteProduct)
+  .put(isAuthenticatedUser, updateProduct)
+  .delete(isAuthenticatedUser, deleteProduct)
   .get(getProductDetails)
 
 export default router
